@@ -36,6 +36,7 @@ The default builtin runtime of azure function app doesn't provide these features
 5. docker
 
    # For mac user, you can install via
+
    brew install azure-cli
    brew tap azure/functions
    brew install azure-functions-core-tools@3 # or azure-functions-core-tools@4
@@ -48,12 +49,13 @@ The default builtin runtime of azure function app doesn't provide these features
 2. Add a new function
 
    func new --name Nlp --template "HTTP trigger" --authlevel anonymous
-3. Disable the default function routering
+3. Disable the default function routerin
 
-   # We are using flask app to handle routes and swagger integration.
-   # By doing so, the whole path will be passed to nlp's flask app(app_rest.py)
+   We are using flask app to handle routes and swagger integration.
 
-   # Add this block to `azure-docker-function/host.json`
+   By doing so, the whole path will be passed to nlp's flask app(app_rest.py)
+
+   Add this block to `azure-docker-function/host.json`
 
    "extensions": {
    "http": {
@@ -61,7 +63,7 @@ The default builtin runtime of azure function app doesn't provide these features
    }
    },
 
-   # Add this to `azure-docker-function/Nlp/function.json`
+   Add this to `azure-docker-function/Nlp/function.json`
 
    "route":"{*route}"
 4. Add endpoints to **azure-docker-function/Nlp/app_rest.py**
@@ -76,9 +78,13 @@ Explain of the dockerfile
 2. Install missing OS dependency:
 
    RUN apt-get update
+
    # pdf2image pip package depends on this
+
    RUN apt-get install poppler-utils -y
+
    # pytesseract has dependency on these two
+
    RUN apt-get install tesseract-ocr -y
    RUN apt-get install libtesseract-dev -y
 3. Set up ENV (default)
@@ -118,8 +124,6 @@ A webhook is configured FOR CI, an image update in dockerhub will notify azure f
 Push to docker:
 
     docker push albahoo/azurefunctionsimage:latest
-
-[A Preview function in azure coriolis-document-nlp (https://coriolis-document-nlp.azurewebsites.net/docs)](https://coriolis-document-nlp.azurewebsites.net/docs)
 
 # 2. jupyter-notebook
 
